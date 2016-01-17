@@ -23,6 +23,8 @@
 #   max current = 3.3/580       = 5.7 mA (well within spec)
 
 import RPi.GPIO as GPIO, time
+from datetime import datetime, timezone
+
 
 # set GPIO17 as read pin
 sensorPin = 17
@@ -33,7 +35,9 @@ obsCount = 6    # number of observations
 # Tell the GPIO library to use Broadcom GPIO references
 GPIO.setmode(GPIO.BCM)
 
-# Define function to measure charge time
+######################## Function definitions ################################
+
+############# Measure charge time ############################################
 def RCtime ():
   # Discharge capacitor
   GPIO.setup(sensorPin, GPIO.OUT)
@@ -49,10 +53,28 @@ def RCtime ():
     if timer > maxWait : return -1
   return timer
 
+############ Append measurement to file ######################################
+def appendReading (ldrCount):
+    # open the file
+
+    # create a timestamp in ISO 8601 format
+    timestamp = datetime.now(timezone.utc).astimezone().isoformat()
+
+    # write the data
+    f = open("ldr-readings.txt", "a")
+    f.write(timestamp)  #  , ldrCount)
+
+    f.close()
+
 # Main program loop
 obs=list()      # an empty list
 for num in range(0, obsCount):
     obs.append(RCtime())
     print(obs)
+
 print("sum=", sum(obs))
 print("Ave time: ", sum(obs)/obsCount)        # Measure timing using GPIO4
+
+appendReading(obs)
+
+

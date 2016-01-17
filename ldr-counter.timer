@@ -1,0 +1,11 @@
+[Unit]
+Description=Read light level and store result
+
+[Timer]
+Persistent=true
+OnBootSec=3min
+OnUnitActiveSec=5m
+Unit=ldr-counter.service
+
+[Install]
+WantedBy=timers.target
