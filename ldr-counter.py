@@ -62,7 +62,7 @@ def appendReading (ldrCount):
 
     # write the data
     f = open("ldr-readings.txt", "a")
-    f.write(timestamp)  #  , ldrCount)
+    f.write(timestamp + ' ' +  " ".join(map(str, ldrCount)) + '\n')
 
     f.close()
 
