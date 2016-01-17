@@ -12,7 +12,7 @@
 # PIN assignments:
 #   pin     Name        Connection
 #   1       +3.3V       power source
-#   7       GPIO 4      read sensor
+#   11      GPIO17      read sensor
 #   9       Ground      Ground
 
 # circuit characteristics
@@ -24,10 +24,10 @@
 
 import RPi.GPIO as GPIO, time
 
-# set GPIO4 as read pin
-sensorPin = 4
+# set GPIO17 as read pin
+sensorPin = 17
 # set maximum time to wait (in which case it is dark)
-maxWait = 5e6
+maxWait = 5e5
 obsCount = 6    # number of observations
 
 # Tell the GPIO library to use Broadcom GPIO references
@@ -35,7 +35,6 @@ GPIO.setmode(GPIO.BCM)
 
 # Define function to measure charge time
 def RCtime ():
-  timer = 0
   # Discharge capacitor
   GPIO.setup(sensorPin, GPIO.OUT)
   GPIO.output(sensorPin, GPIO.LOW)
@@ -44,6 +43,7 @@ def RCtime ():
   GPIO.setup(sensorPin, GPIO.IN)
   # Count loops until voltage across
   # capacitor reads high on GPIO
+  timer = 0
   while (GPIO.input(sensorPin) == GPIO.LOW):
     timer += 1
     if timer > maxWait : return -1
