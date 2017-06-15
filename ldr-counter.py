@@ -61,7 +61,7 @@ def appendReading (ldrCount):
     timestamp = datetime.now(timezone.utc).astimezone().isoformat()
 
     # write the data
-    f = open("ldr-readings.txt", "a")
+    f = open("/home/st33v/sense/light/ldr-readings.txt", "a")
     f.write(timestamp + ' ' +  " ".join(map(str, ldrCount)) + '\n')
 
     f.close()
@@ -70,10 +70,10 @@ def appendReading (ldrCount):
 obs=list()      # an empty list
 for num in range(0, obsCount):
     obs.append(RCtime())
-    print(obs)
+#    print(obs)
 
-print("sum=", sum(obs))
-print("Ave time: ", sum(obs)/obsCount)        # Measure timing using GPIO4
+#print("sum =", sum(obs))
+#print("Ave time: ", sum(obs)/obsCount)        # Measure timing using GPIO4
 
 appendReading(obs)
 

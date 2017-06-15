@@ -3,6 +3,9 @@ Description=Read light level from LDR and store result in file
 
 [Service]
 Type=oneshot
-User=st33v
+User=root
 # WorkingDirectory=/home/st33v/light/
 ExecStart=/usr/local/bin/ldr-counter.py
+
+[Install]
+WantedBy=ldr-counter.timer
